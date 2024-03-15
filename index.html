@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word List Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background: linear-gradient(to bottom, #d3b4ff, #8450ff);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        button, input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #removedWord {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div> <img src="/Goomy.gif" alt="Goomy"> </div>
+
+<div class="container">
+    <h1>Valehtelupeli</h1>
+
+    <div>
+        <label for="wordInput">Anna sana:</label>
+        <input type="text" id="wordInput" placeholder="sinun sanasi tähän" onkeypress="handleKeyPress(event)">
+    </div>
+
+    <div class="button-container">
+        <button id="addWordBtn" onclick="addWord()">Lisää sana</button>
+    </div>
+    <div class="button-container">
+        <button onclick="getAndRemoveWord()">Näytä sana</button>
+        <button onclick="closeProgram()">Lopeta peli</button>
+    </div>
+
+    <!-- Display removed word below the buttons -->
+    <div id="removedWord"></div>
+</div>
+
+<script>
+    var wordList = [];
+    var removedWordContainer = document.getElementById("removedWord");
+    var addWordBtn = document.getElementById("addWordBtn");
+
+    function addWord() {
+        var wordInput = document.getElementById("wordInput");
+        var word = wordInput.value.trim();
+        if (word !== "") {
+            wordList.push(word);
+            alert("'" + word + "' lisätty peliin.");
+            wordInput.value = "";
+        } else {
+            alert("Et voi lisätä tyhjää sanaa.");
+        }
+    }
+
+    function getAndRemoveWord() {
+        if (wordList.length === 0) {
+            alert("Pelissä ei ole sanoja.");
+        } else {
+            var randomIndex = Math.floor(Math.random() * wordList.length);
+            var wordToShow = wordList.splice(randomIndex, 1)[0];
+            removedWordContainer.innerText = wordToShow;
+        }
+    }
+
+    function closeProgram() {
+        alert("Closing the program.");
+        window.location.href = 'about:blank';
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            addWordBtn.click();
+        }
+    }
+</script>
+
+</body>
+</html>
